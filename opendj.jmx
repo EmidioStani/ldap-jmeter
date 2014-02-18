@@ -40,7 +40,7 @@
           </elementProp>
           <elementProp name="ldap_threads" elementType="Argument">
             <stringProp name="Argument.name">ldap_threads</stringProp>
-            <stringProp name="Argument.value">${__P(ldap.threads,5)}</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.threads,10)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="ldap_rampup" elementType="Argument">
@@ -51,6 +51,11 @@
           <elementProp name="ldap_loop" elementType="Argument">
             <stringProp name="Argument.name">ldap_loop</stringProp>
             <stringProp name="Argument.value">${__P(ldap.loop,10)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_report" elementType="Argument">
+            <stringProp name="Argument.name">ldap_report</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.report,C:\TEMP\report.jtl)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -277,7 +282,7 @@
               <bytes>true</bytes>
             </value>
           </objProp>
-          <stringProp name="filename"></stringProp>
+          <stringProp name="filename">C:\TEMP\report.jtl</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
