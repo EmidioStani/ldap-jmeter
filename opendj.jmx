@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="ldap_load_test_plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="configuration_parameters" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="ldap_server" elementType="Argument">
+            <stringProp name="Argument.name">ldap_server</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.server,localhost)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_port" elementType="Argument">
+            <stringProp name="Argument.name">ldap_port</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.port,1389)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="user_base" elementType="Argument">
+            <stringProp name="Argument.name">user_base</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.base,ou=users\,dc=csde\,dc=esa\,dc=int)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_admin_dn" elementType="Argument">
+            <stringProp name="Argument.name">ldap_admin_dn</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.admin,cn=admin)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_admin_password" elementType="Argument">
+            <stringProp name="Argument.name">ldap_admin_password</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.pass,password)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_threads" elementType="Argument">
+            <stringProp name="Argument.name">ldap_threads</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.threads,5)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_rampup" elementType="Argument">
+            <stringProp name="Argument.name">ldap_rampup</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.rampup,0)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ldap_loop" elementType="Argument">
+            <stringProp name="Argument.name">ldap_loop</stringProp>
+            <stringProp name="Argument.value">${__P(ldap.loop,10)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ldap_thread_group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${ldap_loop}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${ldap_threads}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${ldap_rampup}</stringProp>
+        <longProp name="ThreadGroup.start_time">1342035482000</longProp>
+        <longProp name="ThreadGroup.end_time">1342035482000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ConfigTestElement guiclass="LdapConfigGui" testclass="ConfigTestElement" testname="ldap_request_defaults" enabled="true">
+          <stringProp name="servername">${ldap_server}</stringProp>
+          <stringProp name="port">${ldap_port}</stringProp>
+          <stringProp name="rootdn">${user_base}</stringProp>
+          <boolProp name="user_defined">false</boolProp>
+          <stringProp name="test">add</stringProp>
+          <stringProp name="base_entry_dn"></stringProp>
+          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <ConfigTestElement guiclass="LoginConfigGui" testclass="ConfigTestElement" testname="ldap_login_config" enabled="true">
+          <stringProp name="ConfigTestElement.username">${ldap_admin_dn}</stringProp>
+          <stringProp name="ConfigTestElement.password">${ldap_admin_password}</stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="user_name_password_random_variable" enabled="true">
+          <stringProp name="maximumValue">100000</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat">user_00000</stringProp>
+          <boolProp name="perThread">false</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">userName</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <LDAPSampler guiclass="LdapTestSamplerGui" testclass="LDAPSampler" testname="user_add_ldap_request" enabled="true">
+          <stringProp name="servername"></stringProp>
+          <stringProp name="port"></stringProp>
+          <stringProp name="rootdn"></stringProp>
+          <boolProp name="user_defined">true</boolProp>
+          <stringProp name="test">add</stringProp>
+          <stringProp name="base_entry_dn">uid=${userName}</stringProp>
+          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="cn" elementType="Argument">
+                <stringProp name="Argument.name">cn</stringProp>
+                <stringProp name="Argument.value">${userName}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="sn" elementType="Argument">
+                <stringProp name="Argument.name">sn</stringProp>
+                <stringProp name="Argument.value">${userName}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="userPassword" elementType="Argument">
+                <stringProp name="Argument.name">userPassword</stringProp>
+                <stringProp name="Argument.value">${userName}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="mail" elementType="Argument">
+                <stringProp name="Argument.name">mail</stringProp>
+                <stringProp name="Argument.value">${userName}@gmail.com</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </LDAPSampler>
+        <hashTree/>
+        <LDAPSampler guiclass="LdapTestSamplerGui" testclass="LDAPSampler" testname="user_modify_ldap_request" enabled="true">
+          <stringProp name="servername"></stringProp>
+          <stringProp name="port"></stringProp>
+          <stringProp name="rootdn"></stringProp>
+          <boolProp name="user_defined">true</boolProp>
+          <stringProp name="test">modify</stringProp>
+          <stringProp name="base_entry_dn">uid=${userName}</stringProp>
+          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="mail" elementType="Argument">
+                <stringProp name="Argument.name">mail</stringProp>
+                <stringProp name="Argument.value">${userName}@hotmail.com</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </LDAPSampler>
+        <hashTree/>
+        <LDAPSampler guiclass="LdapTestSamplerGui" testclass="LDAPSampler" testname="user_search_ldap_request" enabled="true">
+          <stringProp name="servername"></stringProp>
+          <stringProp name="port"></stringProp>
+          <stringProp name="rootdn"></stringProp>
+          <boolProp name="user_defined">true</boolProp>
+          <stringProp name="test">search</stringProp>
+          <stringProp name="search"></stringProp>
+          <stringProp name="searchfilter">(mail=${userName}@hotmail.com)</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </LDAPSampler>
+        <hashTree/>
+        <LDAPSampler guiclass="LdapTestSamplerGui" testclass="LDAPSampler" testname="user_delete_ldap_request" enabled="true">
+          <stringProp name="servername"></stringProp>
+          <stringProp name="port"></stringProp>
+          <stringProp name="rootdn"></stringProp>
+          <boolProp name="user_defined">true</boolProp>
+          <stringProp name="test">delete</stringProp>
+          <stringProp name="delete">uid=${userName}</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </LDAPSampler>
+        <hashTree/>
+        <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+          <collectionProp name="Asserion.test_strings">
+            <stringProp name="-733631846">successful</stringProp>
+          </collectionProp>
+          <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+          <boolProp name="Assertion.assume_success">false</boolProp>
+          <intProp name="Assertion.test_type">1</intProp>
+        </ResponseAssertion>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
