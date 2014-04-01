@@ -20,7 +20,7 @@ The test case can be launched by GUI or by command line. By command line you can
 * __ldap.threads__ (default 10)
 * __ldap.rampup__ (default 0)
 * __ldap.loop__ (default 10)
-* __ldap_report__ (default C:\TEMP\report.jtl)
+* __ldap.report__ (default C:\TEMP\report.jtl)
 
 An example by command line would be:
 
