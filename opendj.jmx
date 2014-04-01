@@ -282,7 +282,7 @@
               <bytes>true</bytes>
             </value>
           </objProp>
-          <stringProp name="filename">C:\TEMP\report.jtl</stringProp>
+          <stringProp name="filename">${ldap_report}</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
